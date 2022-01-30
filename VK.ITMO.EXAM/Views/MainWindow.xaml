@@ -13,11 +13,27 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <DockPanel>
-        <DataGrid DockPanel.Dock="Top" MaxHeight="360"/>
+        <DataGrid DockPanel.Dock="Top" MaxHeight="360" ItemsSource="{Binding Reports}" AutoGenerateColumns="False"
+                  IsReadOnly="False"
+                  SelectionMode="Single"
+                  VerticalGridLinesBrush="DarkBlue"
+                  GridLinesVisibility="Vertical"
+                  AlternatingRowBackground="LightBlue"
+                  SelectedItem="{Binding SelectedReport}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Parameter ID" Binding="{Binding ParameterID}"/>
+                <DataGridTextColumn Header="Period" Binding="{Binding PeriodID}"/>
+                <DataGridTextColumn Header="Start" Binding="{Binding PeriodStart, StringFormat=dd.MM.yyyy}" />
+                <DataGridTextColumn Header="End" Binding="{Binding PeriodEnd, StringFormat=dd.MM.yyyy}"/>
+                <DataGridTextColumn Header="Territory" Binding="{Binding TerID}"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}"/>
+            </DataGrid.Columns>
+                
+        </DataGrid>
         <Grid DockPanel.Dock="Bottom" Height="50">
-            <Button Content="Add" HorizontalAlignment="Left" Margin="25,10,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Edit" HorizontalAlignment="Left" Margin="125,10,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Remove" HorizontalAlignment="Left" Margin="225,10,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Add" Command="{Binding AddCommand}" HorizontalAlignment="Left" Margin="25,10,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Edit" Command="{Binding EditCommand}" HorizontalAlignment="Left" Margin="125,10,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button Content="Remove" Command="{Binding DeleteCommand}" HorizontalAlignment="Left" Margin="225,10,0,0" VerticalAlignment="Top" Width="75"/>
             <Button Content="Exit" HorizontalAlignment="Left" Margin="690,15,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.2,-0.55">
                 <Button.Command>
                     <cmd:CloseAppCommand/>

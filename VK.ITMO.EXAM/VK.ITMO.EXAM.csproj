@@ -71,6 +71,8 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ConnectCommand.cs" />
     <Compile Include="Commands\LambdaCommand.cs" />
+    <Compile Include="Data\DBAccess.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="ViewModels\AuthorizationWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -108,8 +110,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

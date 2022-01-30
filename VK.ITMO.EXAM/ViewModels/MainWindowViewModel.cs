@@ -4,24 +4,81 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
+using VK.ITMO.EXAM.Data;
+using VK.ITMO.EXAM.Models;
+using VK.ITMO.EXAM.Views;
+
 
 namespace VK.ITMO.EXAM.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        #region Data
+        
+        public ObservableCollection<ReportModel> Reports { get; set; }
+        private DBAccess dba;
+        private void updateReports()
+        {
+            List<ReportModel> t = dba.GetReports(); //костыль, вьюха сохраняет указатель на исходный список, что делать ХЗ
+            Reports.Clear();
+            foreach (ReportModel item in t)
+                Reports.Add(item);
+        }
+        
+        #endregion
+
         #region Commands
 
-        /*
-        #region CloseAppCommand
-        public ICommand CloseAppCommand { get; }
+        
+        #region AddCommand
+        public ICommand AddCommand { get; }
 
-        private void OnCloseAppCommandExecuted(object p)
+        private void OnAddCommandExecuted(object p)
         {
-            System.Windows.Application.Current.Shutdown();
+            dba.InsertRecord(_SelectedReport);
+            updateReports();
         }
 
-        private bool CanCloseAppCommandExecuted(object p) => true;
-        #endregion*/
+        private bool CanAddCommandExecuted(object p) => (_SelectedReport is null) || (_SelectedReport.LineID > 0) ? false : true;
+        #endregion
+
+        #region EditCommand
+        public ICommand EditCommand { get; }
+
+        private void OnEditCommandExecuted(object p)
+        {
+            dba.UpdateRecord(_SelectedReport);
+            updateReports();
+        }
+
+        private bool CanEditCommandExecuted(object p) => (_SelectedReport is null) || (_SelectedReport.LineID < 0) ? false:true;
+        #endregion
+
+        #region DeleteCommand
+        public ICommand DeleteCommand { get; }
+
+        private void OnDeleteCommandExecuted(object p)
+        {
+            try
+            {
+                if( dba.DeleteRecord(_SelectedReport.LineID) == true)
+                {
+                    System.Windows.MessageBox.Show("Record removed");
+                }
+                else
+                    System.Windows.MessageBox.Show("Record not found");
+                updateReports();
+            }
+                
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.ToString());
+            }            
+        }
+
+        private bool CanDeleteCommandExecuted(object p) => (_SelectedReport is null) || (_SelectedReport.LineID < 0) ? false : true;
+        #endregion
 
         #endregion
 
@@ -39,9 +96,18 @@ namespace VK.ITMO.EXAM.ViewModels
         }
         #endregion
 
+        private ReportModel _SelectedReport;
+
+        public ReportModel SelectedReport { get => _SelectedReport; set { _SelectedReport = value; } }
+
+
         public MainWindowViewModel()
         {
-            //CloseAppCommand = new Commands.LambdaCommand(OnCloseAppCommandExecuted, CanCloseAppCommandExecuted);
+            dba = new DBAccess();
+            Reports = new ObservableCollection<ReportModel>(dba.GetReports());
+            AddCommand = new Commands.LambdaCommand(OnAddCommandExecuted, CanAddCommandExecuted);
+            EditCommand = new Commands.LambdaCommand(OnEditCommandExecuted, CanEditCommandExecuted);
+            DeleteCommand = new Commands.LambdaCommand(OnDeleteCommandExecuted, CanDeleteCommandExecuted);
         }
     }
 }

@@ -23,8 +23,6 @@ namespace VK.ITMO.EXAM
         public MainWindow()
         {
             InitializeComponent();
-            Views.AuthorizationWindow startupAuthorization = new Views.AuthorizationWindow();
-            startupAuthorization.Show();
         }
     }
 }

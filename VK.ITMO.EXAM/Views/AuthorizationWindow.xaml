@@ -7,21 +7,23 @@
         xmlns:vm="clr-namespace:VK.ITMO.EXAM.ViewModels"
         xmlns:local="clr-namespace:VK.ITMO.EXAM.Views"
         mc:Ignorable="d"
-        Title="AuthorizationWindow" Height="237" Width="274">
+        Title="AuthorizationWindow" Height="246.4" Width="323.2">
     <Window.DataContext>
         <vm:AuthorizationWindowViewModel/>
     </Window.DataContext>
     <Grid Margin="0,0,473,37">
         <Label Content="UserName" HorizontalAlignment="Left" Margin="20,11,-120,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Password" HorizontalAlignment="Left" Margin="20,42,-120,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="tbUserName" HorizontalAlignment="Left" Height="23" Margin="95,14,-220,0" TextWrapping="Wrap" Text="{Binding UserName}" VerticalAlignment="Top" Width="125"/>
-        <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="95,46,-220,0" TextWrapping="Wrap" Text="{Binding Password}" VerticalAlignment="Top" Width="125" RenderTransformOrigin="0.32,1"/>
-        <CheckBox x:Name="cbWinAuthorization" Content="Windows Authorization" HorizontalAlignment="Left" Margin="25,100,-170,0" VerticalAlignment="Top" Width="145" Checked="cbWinAuthorization_Checked" Unchecked="cbWinAuthorization_Unchecked" IsChecked="{Binding AuthorizationWindows}"/>
-        <Button Content="Connect" HorizontalAlignment="Left" Margin="25,145,-105,-21" VerticalAlignment="Top" Width="80" Height="25" Command="{Binding ConnectCommand}"/>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="135,145,-215,-21" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.562,1.25" Height="25">
+        <TextBox x:Name="tbUserName" HorizontalAlignment="Left" Height="23" Margin="95,14,-300,0" TextWrapping="Wrap" Text="{Binding UserName}" VerticalAlignment="Top" Width="205"/>
+        <TextBox x:Name="tbPassword" HorizontalAlignment="Left" Height="23" Margin="95,46,-300,0" TextWrapping="Wrap" Text="{Binding Password}" VerticalAlignment="Top" Width="205" RenderTransformOrigin="0.32,1"/>
+        <CheckBox x:Name="cbWinAuthorization" Content="Windows Authorization" HorizontalAlignment="Left" Margin="25,118,-170,0" VerticalAlignment="Top" Width="145" Checked="cbWinAuthorization_Checked" Unchecked="cbWinAuthorization_Unchecked" IsChecked="{Binding AuthorizationWindows}"/>
+        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="55,145,-135,0" VerticalAlignment="Top" Width="80" Height="25" Command="{Binding ConnectCommand}" Click="btnConnect_Click"/>
+        <Button x:Name="btnExit" Content="Exit" HorizontalAlignment="Left" Margin="185,145,-265,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.562,1.25" Height="25">
             <Button.Command>
                 <cmd:CloseAppCommand/>
             </Button.Command>
         </Button>
+        <Label Content="Path" HorizontalAlignment="Left" Margin="20,74,-120,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="tbPath" HorizontalAlignment="Left" Height="23" Margin="95,78,-300,0" TextWrapping="Wrap" Text="{Binding Path}" VerticalAlignment="Top" Width="205" RenderTransformOrigin="0.32,1"/>
     </Grid>
 </Window>

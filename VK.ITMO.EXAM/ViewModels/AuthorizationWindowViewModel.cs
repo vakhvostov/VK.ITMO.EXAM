@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VK.ITMO.EXAM.Data;
+
 
 namespace VK.ITMO.EXAM.ViewModels
 {
@@ -16,7 +18,12 @@ namespace VK.ITMO.EXAM.ViewModels
 
         private void OnConnectCommandExecuted(object p)
         {
-            System.Windows.MessageBox.Show(this._UserName + "" + this._Password + this._AuthorizationWindows);
+            if (authorizationWindows)
+                DBAccess.DBSetConnectionParameters(path);
+            else
+                DBAccess.DBSetConnectionParameters(userName, password, path);
+            MainWindow m = new MainWindow();
+            m.Show();
         }
 
         private bool CanConnectCommandExecuted(object p) => true;
@@ -25,37 +32,49 @@ namespace VK.ITMO.EXAM.ViewModels
         #endregion
 
         #region Text
-        private string _UserName = "sa";
-        private string _Password = "satest";
-        private bool _AuthorizationWindows = true;
+        private string userName = "sa";
+        private string password = "satest";
+        private string path = "LAPTOP-DHBMFRC4\\SQLEXPRESS";
+        private bool authorizationWindows = true;
         public string UserName
         {
-            get => _UserName;
+            get => userName;
             set
             {
-                if (Equals(_UserName, value)) return;
-                _UserName = value;
+                if (Equals(userName, value)) return;
+                userName = value;
                 OnPropertyChanged();
             }
         }
 
         public string Password
         {
-            get => _Password;
+            get => password;
             set
             {
-                if (Equals(_Password, value)) return;
-                _Password = value;
+                if (Equals(password, value)) return;
+                password = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Path
+        {
+            get => path;
+            set
+            {
+                if (Equals(path, value)) return;
+                path = value;
                 OnPropertyChanged();
             }
         }
 
         public bool AuthorizationWindows
         {
-            get => _AuthorizationWindows;
+            get => authorizationWindows;
             set
             {
-                _AuthorizationWindows = value;
+                authorizationWindows = value;
                 OnPropertyChanged();
             }
         }
@@ -64,6 +83,7 @@ namespace VK.ITMO.EXAM.ViewModels
         public AuthorizationWindowViewModel()
         {
             ConnectCommand = new Commands.LambdaCommand(OnConnectCommandExecuted, CanConnectCommandExecuted);
+            
         }
 
     }

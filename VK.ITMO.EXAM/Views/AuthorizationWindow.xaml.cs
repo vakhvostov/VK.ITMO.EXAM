@@ -37,5 +37,13 @@ namespace VK.ITMO.EXAM.Views
             tbPassword.IsEnabled = false;
             tbUserName.IsEnabled = false;
         }
+
+
+
+
+        private void btnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
